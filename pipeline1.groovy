@@ -1,11 +1,12 @@
 pipeline {
     agent {
         docker { image 'node:16.13.1-alpine' }
+        args '-v ${env.WORKSPACE}:/workspace'
     }
     stages {
         stage('Test1') {
             steps {
-                sh 'node --version'
+                sh 'pwd;ls -l;node --version'
             }
         }
         stage('Test2') {
