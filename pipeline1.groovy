@@ -1,7 +1,9 @@
 pipeline {
     agent {
-        docker { image 'node:16.13.1-alpine' }
-        args '-v ${env.WORKSPACE}:/workspace'
+        docker {
+            image 'node:16.13.1-alpine'
+            args '-v ${env.WORKSPACE}:/workspace'
+        }
     }
     stages {
         stage('Test1') {
