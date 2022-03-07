@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Test2') {
             steps {
-                sh "ls -l /workspace;node --version"
+                sh "ls -l /workspace;node --version; touch /workspace/kenny.txt"
             }
         }
         stage('Test3') {
