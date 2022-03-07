@@ -1,0 +1,72 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+stage level Agents:
+pipeline {
+    agent none
+    stages {
+        stage('Example Build') {
+            agent { docker 'cuda10.2' }
+            steps {
+                echo 'Hello, cuda'
+            }
+            post {}
+        }
+        stage('Example Test') {
+            agent { docker 'corex1.0' }
+            steps {
+                echo 'Hello, corex'
+            }
+            post {}
+        }
+    }
+    post {}
+}
+
+NOTE:
+The post section defines one or more additional steps that are run upon the completion of a Pipeline’s or stage’s run
+(depending on the location of the post section within the Pipeline).
+post can support any of the following post-condition blocks:
+always,
+changed,
+fixed,
+regression,
+aborted,
+failure,
+success,
+unstable,
+unsuccessful,
+cleanup.
+
+------------------------------------------------------------------------------------------------------------------------
+>>>
+agent any
+agent none
+>>>
+agent { label 'labelName' }
+agent { label 'labelName1 && labelName2' }
+agent { label 'labelName1 || labelName2' }
+>>>
+agent { node { label 'labelName' } }
+agent {
+    node {
+        label 'labelName'
+        customWorkspace '/some/other/path'
+    }
+}
+>>>
+agent { docker 'cuda10.2' }
+agent {
+    docker {
+        image 'cuda10.2'
+        label 'labelName'
+        args  '-v /tmp:/tmp'
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------
+https://blog.csdn.net/u011541946/article/details/83627600
+https://www.jenkins.io/blog/2018/07/02/whats-new-declarative-piepline-13x-sequential-stages/
+
+------------------------------------------------------------------------------------------------------------------------
+需要指出的是，一个stage{…}必须有且只有一个steps{…}, 或者parallel{…} 或者stages{…}

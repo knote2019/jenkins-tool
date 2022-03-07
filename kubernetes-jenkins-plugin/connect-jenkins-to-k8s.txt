@@ -1,0 +1,49 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+Manage Jenkins -> Manage Nodes and Clouds -> Configure Clouds -> Add a new cloud -> Kubernetes
+
+------------------------------------------------------------------------------------------------------------------------
+从/root/.kube/config获取K8S信息:
+
+Kubernetes 地址: 对应文件中的clusters.cluster.server地址.
+Kubernetes 服务证书 key: 对应文件中的clusters.cluster.certificate-authority-data，需要base64解码.
+
+将clusters.cluster.certificate-authority-data写入tmp文件中，进行解码:
+
+[root@localhost ~]# cat tmp | base64 -d
+-----BEGIN CERTIFICATE-----
+MIIC5zCCAc+gAwIBAgIBADANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwprdWJl
+cm5ldGVzMB4XDTIxMDkwOTEzMDIzMloXDTMxMDkwNzEzMDIzMlowFTETMBEGA1UE
+AxMKa3ViZXJuZXRlczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAM7J
+FAYXJKlpLhk/Hd5fAGdbSXRktSD/Kiu9rfr4Vcn6N1UhCqO5dzoldCmQdrNpsXfq
+odp4MCIzVAz8R8v3O16jfG3wAgIu9pg1gy2InveOvcTWQNN/yZe5oFISgygpvcZe
+tJPm4SJ+w7bKknIJIa+1K63SPba/1ahmFJUY00JZMLEodZvYYRnr2bwj0X72MedK
+bWkfpdI7jgbmgG33SBzUZnkgCT2xB+H0WAoFEYFUCCtJeRCJIKDZEy2zB7qJ3bPN
+t7M1lBoQ5jFMXMgKr6zKcC5t0v942Em2E38B1DVqAtfIGaVOKVkd9C1+KEGkuLZq
+Vi06ZtLm5jxMLkZn9yUCAwEAAaNCMEAwDgYDVR0PAQH/BAQDAgKkMA8GA1UdEwEB
+/wQFMAMBAf8wHQYDVR0OBBYEFG4n14BhJm6tDcX7p7HwntKWJIadMA0GCSqGSIb3
+DQEBCwUAA4IBAQAgk2rt4ffbeb1RGjqhlWio6QEhp/myo8jV79Mfrp3zdirqG4GK
+HjAM6y6fOZkqR0U3bA6CTF6XpyY4OxST3A9rE6hKb/oKAlFW9Vgl3KEDVWMPA6qO
+5ZMa+/liUs6KwXOAPOLWQjYCamIcfESFczfcU4TBFT9v2OHe4tfpoNpOi1j8I6m8
+RrHepYUqylWjHlEBvWlAkfTGnzH9oug22zRAkAy63fis8pkBAiFtFW//iC/xSBym
+j+n3jo+J+16eheh1cEia88Z6/OuZPmKcdZ1PGCGDDCKCgajdeDmDgG+v24aGo2V2
+2bJtNjr0eOaT6smyVwaTNBdTVkPhFfP7cbu8
+-----END CERTIFICATE-----
+
+------------------------------------------------------------------------------------------------------------------------
+# 创建命名空间
+kubectl create namespace jenkins
+
+# 创建sa-jenkins用户
+kubectl create serviceaccount jenkins -n jenkins
+
+# 绑定admin角色到sa-jenkins用户
+kubectl create clusterrolebinding -n jenkins jenkins-cluster-admin --clusterrole='cluster-admin' --serviceaccount=jenkins:jenkins
+
+# 查询token
+kubectl get secrets -n jenkins -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='jenkins')].data.token}" | base64 -d
+
+------------------------------------------------------------------------------------------------------------------------
+参考:
+https://www.jianshu.com/p/9825ef7bbaaa

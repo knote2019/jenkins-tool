@@ -1,0 +1,5 @@
+
+每30分触发：
+Build periodically: H/30 * * * *
+每4小时触发：
+Build periodically: H H/4 * * *

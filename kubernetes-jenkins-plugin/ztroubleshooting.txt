@@ -1,0 +1,13 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+Invalid agent type "kubernetes" specified. Must be one of [any, docker, dockerfile, label, none]
+
+解决方案:
+安装kubernetes plugin然后重启.
+
+新增后就有如下几个类型了:
+[any, docker, dockerfile, kubernetes, label, none]
+
+参考:
+https://github.com/jenkinsci/kubernetes-plugin/blob/master/README.md

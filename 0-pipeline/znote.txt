@@ -1,0 +1,58 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+Official Guide:
+https://www.jenkins.io/doc/book/pipeline/syntax/
+
+------------------------------------------------------------------------------------------------------------------------
+Jenkins Groovy DSL Pipeline 流水线介绍:
+
+job-dsl-plugin 允许使用DSL以编程方式创建项目.
+
+DSL 专门针对一个特定的问题领域，具有建模所需的语法和语义的语言。在与问题域相同的抽象层次对概念建模。
+DSL 是 Jenkins 服务特有的一个语言，底层通过 Groovy 编程语言来实现。在使用过程中，可以很好的结合 Groovy。
+Jenkins Job DSL Plugin 提供了丰富的API，我们可以通过这些API实现，对 Jenkinis 中View、Job 等管理。
+Jenkins 内置了 Groovy 的引擎，我们可以通过 Groovy 编程语言在 DSL API 中添加逻辑编程。
+
+Pipeline 流水线
+Jenkins 流水线是一套插件，它支持实现和集成持续交付流水线到 Jenkins。
+流水线提供了一组可扩展的工具，用于通过流水线 DSL 将简单到复杂的交付流水线建模为“代码”。
+流水线支持两种语法：
+1.声明式pipeline.（在 pipeline 2.5 引入）
+2.脚本式pipeline.
+
+两种都可以用来在Jenkinsfile或Web-UI中定义流水线，
+不过通常认为创建一个 Jenkinsfile 并将其检入源代码控制仓库是最佳实践。
+>>>
+1.使用 Groovy 语言结合 DSL 开发的脚本称为Jenkinsfile。Jenkinsfile的文件保存任务配置和流水线信息。
+2.声明式和脚本式流水线都是 DSL 语言，用来描述软件交付流水线的一部分。 脚本式流水线是用一种限制形式的 Groovy 语法编写的。
+
+
+NOTE:
+声明式pipeline简述:
+声明式流水线的 Jenkinsfile 文件以 pipeline 关键词开头，其中包含了多个关键词。
+agent指令是必需的，它指示 Jenkins 为流水线分配一个执行器和工作区。没有 agent 指令的话，声明式流水线不仅无效，它也不可能完成任何工作！
+一个合法的声明式流水线还需要 stages 指令和 steps 指令，因为它们指示 Jenkins 要执行什么，在哪个阶段执行。
+
+声明式pipeline举例:
+Jenkinsfile (Declarative Pipeline)
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
+        stage('Archive') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+            }
+        }
+    }
+}

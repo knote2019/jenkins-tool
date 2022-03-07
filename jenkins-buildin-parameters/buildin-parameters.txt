@@ -1,0 +1,19 @@
+
+
+1. Jenkins获取运行job的用户名
+需要安装user build vars plugin 插件，然后就可以取到$BUILD_USER_ID变量。
+user build vars plugin下载地址：
+https://wiki.jenkins-ci.org/display/JENKINS/Build+User+Vars+Plugin
+可以使用的用户变量：
+
+Property	            Default
+BUILD_USER	            Full name
+BUILD_USER_FIRST_NAME	First name
+BUILD_USER_LAST_NAME	Last name
+BUILD_USER_ID	        Jenkins user ID
+BUILD_USER_EMAIL	    Email address
+
+在jenkins任务中使用构建变量：注意需要勾选 "Set jenkins user build variables."
+
+example:
+[ "${BUILD_USER_ID}" == "" ] && echo "###AUTHENTICATION ERROR:Jenkins must login!" && exit 1
