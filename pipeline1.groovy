@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Test2') {
             steps {
-                sh 'node --version'
+                sh 'ls -l /workspace;node --version'
             }
         }
         stage('Test3') {
