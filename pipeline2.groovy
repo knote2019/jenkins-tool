@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    kubernetes {
+    kubernettes {
       cloud 'kubernetes'
       label 'mypod'
       yaml """
