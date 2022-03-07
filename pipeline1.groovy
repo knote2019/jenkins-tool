@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Test3') {
             steps {
-                sh "node --version"
+                sh "ls -l /workspace;node --version"
             }
         }
     }
