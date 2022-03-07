@@ -8,17 +8,17 @@ pipeline {
     stages {
         stage('Test1') {
             steps {
-                sh 'pwd;ls -l;node --version'
+                sh "pwd;ls -l;node --version;echo ${env.WORKSPACE}"
             }
         }
         stage('Test2') {
             steps {
-                sh 'ls -l /workspace;node --version'
+                sh "ls -l /workspace;node --version"
             }
         }
         stage('Test3') {
             steps {
-                sh 'node --version'
+                sh "node --version"
             }
         }
     }
