@@ -7,6 +7,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
+  hostNetwork: true
   containers:
   - name: maven
     image: maven:3.3.9-jdk-8-alpine
