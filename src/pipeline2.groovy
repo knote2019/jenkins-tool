@@ -4,7 +4,7 @@ pipeline {
         stage('host1'){
             agent { node { label "10.115.0.251" } }
             options {
-                timestamps ()
+                timestamps()
                 ansiColor('xterm')
             }
             stages {
@@ -17,17 +17,17 @@ pipeline {
                     stages {
                         stage('Test1') {
                             steps {
-                                sh "echo 'Test1'"
+                                sh "echo 'Test1';pwd; ls -l"
                             }
                         }
                         stage('Test2') {
                             steps {
-                                sh "echo 'Test2'"
+                                sh "echo 'Test2';pwd; ls -l"
                             }
                         }
                         stage('Test3') {
                             steps {
-                                sh "echo 'Test3'"
+                                sh "echo 'Test3';pwd; ls -l"
                             }
                         }
                     }
@@ -38,7 +38,7 @@ pipeline {
         stage('host2'){
             agent { node { label "10.115.0.251" } }
             options {
-                timestamps ()
+                timestamps()
                 ansiColor('xterm')
             }
             stages {
@@ -51,17 +51,17 @@ pipeline {
                     stages {
                         stage('Test1') {
                             steps {
-                                sh "echo 'Test1'"
+                                sh "echo 'Test1';pwd; ls -l"
                             }
                         }
                         stage('Test2') {
                             steps {
-                                sh "echo 'Test2'"
+                                sh "echo 'Test2';pwd; ls -l"
                             }
                         }
                         stage('Test3') {
                             steps {
-                                sh "echo 'Test3'"
+                                sh "echo 'Test3';pwd; ls -l"
                             }
                         }
                     }
