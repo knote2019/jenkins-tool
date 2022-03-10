@@ -73,6 +73,11 @@ pipeline {
                         stage('Test3') {
                             steps {
                                 sh "echo 'Test3';pwd; ls -l"
+                                allure([
+                                    includeProperties: false,
+                                    jdk: '',
+                                    results: [[path: 'runtime_result']]
+                                ])
                             }
                         }
                     }
