@@ -23,7 +23,7 @@ pipeline {
                     stages {
                         stage('Test1') {
                             steps {
-                                sh "echo 'Test1';pwd; ls -l"
+                                sh "echo -e '\E[1;31m Test1';pwd; ls -l"
                             }
                         }
                         stage('Test2') {
