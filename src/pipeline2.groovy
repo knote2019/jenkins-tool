@@ -88,14 +88,14 @@ pipeline {
                     }
                     post {
                         always {
-                            echo 'host1 docker POST'
+                            echo 'host2 docker POST'
                         }
                     }
                 }
             }
             post {
                 always {
-                    echo 'host1 POST'
+                    echo 'host2 POST'
                 }
             }
         }
