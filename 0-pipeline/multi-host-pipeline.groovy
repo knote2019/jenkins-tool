@@ -84,10 +84,10 @@ pipeline {
         always {
             script {
                 sh """
-                    echo "=================================================="
-                    hostname
-                    pwd; ls -l; ip a | grep 'inet 10';
-                    echo "=================================================="
+                    echo "========================================"
+                    nic_name=\$(ip route | grep default | awk -F" " '{print \$5}')
+                    nic_ip=\$(ip a show \$nic_name | grep inet | grep \$nic_name | awk -F" " '{print \$2}' | awk -F"/" '{print \$1}')
+                    echo "========================================"
                 """
                 cleanWs()
                 log.blue('Finish')
