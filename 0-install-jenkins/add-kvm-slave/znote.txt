@@ -1,0 +1,20 @@
+
+
+------------------------------------------------------------------------------------------------------------------------
+https://github.com/jenkinsci/libvirt-slave-plugin/blob/master/CHANGELOG.md
+
+------------------------------------------------------------------------------------------------------------------------
+Unable to Load Library 'virt': libvirt.so
+
+apt install -y libvirt-dev
+apt install -y libvirt-clients
+
+------------------------------------------------------------------------------------------------------------------------
+org.libvirt.LibvirtException: Cannot recv data: Host key verification failed.: Connection reset by peer
+
+解决办法:
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.115.0.251
+
+测试方法:
+virsh -c qemu+ssh://root@10.115.0.251/system list
