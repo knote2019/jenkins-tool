@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker2 {
+        docker {
             image "node:16.13.1-alpine"
             args "-v /workspace:/workspace"
         }

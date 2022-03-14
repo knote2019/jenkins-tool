@@ -13,6 +13,14 @@ spec:
     image: maven:3.3.9-jdk-8-alpine
     command: ['cat']
     tty: true
+    volumeMounts:
+  　- name: stores
+      mountPath: /stores
+  volumes:
+  - name: stores
+    hostPath:
+      path: /stores
+      type: DirectoryOrCreate
 """
     }
   }
@@ -20,7 +28,7 @@ spec:
     stage('Run maven') {
       steps {
         container('maven') {
-          sh 'mvn -version'
+          sh 'mvn -version; ls -l /stores'
         }
       }
     }

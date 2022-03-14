@@ -1,0 +1,70 @@
+root@ubuntu251:~# iptables -L -t nat --line-number
+Chain PREROUTING (policy ACCEPT)
+num  target     prot opt source               destination
+1    KUBE-SERVICES  all  --  anywhere             anywhere             /* kubernetes service portals */
+2    DOCKER     all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL
+3    DNAT       tcp  --  anywhere             ubuntu.iluvatar.local  tcp dpt:10022 to:192.168.122.245:22
+
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+1    KUBE-SERVICES  all  --  anywhere             anywhere             /* kubernetes service portals */
+2    DOCKER     all  --  anywhere            !localhost/8          ADDRTYPE match dst-type LOCAL
+
+Chain POSTROUTING (policy ACCEPT)
+num  target     prot opt source               destination
+1    RETURN     all  --  192.168.122.0/24     base-address.mcast.net/24
+2    RETURN     all  --  192.168.122.0/24     255.255.255.255
+3    MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+4    MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+5    MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24
+6    KUBE-POSTROUTING  all  --  anywhere             anywhere             /* kubernetes postrouting rules */
+7    RETURN     all  --  172.17.0.0/16        172.17.0.0/16
+8    MASQUERADE  all  --  172.17.0.0/16       !base-address.mcast.net/4
+9    RETURN     all  -- !172.17.0.0/16        ubuntu251/24
+10   MASQUERADE  all  -- !172.17.0.0/16        172.17.0.0/16
+11   MASQUERADE  tcp  --  172.17.26.3          172.17.26.3          tcp dpt:50000
+12   MASQUERADE  tcp  --  172.17.26.3          172.17.26.3          tcp dpt:http-alt
+13   SNAT       tcp  --  192.168.122.0/24     192.168.122.245      tcp dpt:ssh to:192.168.122.1
+
+Chain DOCKER (2 references)
+num  target     prot opt source               destination
+1    DNAT       tcp  --  anywhere             anywhere             tcp dpt:50000 to:172.17.26.3:50000
+2    DNAT       tcp  --  anywhere             anywhere             tcp dpt:http-alt to:172.17.26.3:8080
+
+Chain KUBE-FIREWALL (0 references)
+num  target     prot opt source               destination
+1    KUBE-MARK-DROP  all  --  anywhere             anywhere
+
+Chain KUBE-KUBELET-CANARY (0 references)
+num  target     prot opt source               destination
+
+Chain KUBE-LOAD-BALANCER (0 references)
+num  target     prot opt source               destination
+1    KUBE-MARK-MASQ  all  --  anywhere             anywhere
+
+Chain KUBE-MARK-DROP (1 references)
+num  target     prot opt source               destination
+1    MARK       all  --  anywhere             anywhere             MARK or 0x8000
+
+Chain KUBE-MARK-MASQ (3 references)
+num  target     prot opt source               destination
+1    MARK       all  --  anywhere             anywhere             MARK or 0x4000
+
+Chain KUBE-NODE-PORT (1 references)
+num  target     prot opt source               destination
+1    KUBE-MARK-MASQ  tcp  --  anywhere             anywhere             /* Kubernetes nodeport TCP port for masquerade purpose */ match-set KUBE-NODE-PORT-TCP dst
+
+Chain KUBE-POSTROUTING (1 references)
+num  target     prot opt source               destination
+1    RETURN     all  --  anywhere             anywhere             mark match ! 0x4000/0x4000
+2    MARK       all  --  anywhere             anywhere             MARK xor 0x4000
+3    MASQUERADE  all  --  anywhere             anywhere             /* kubernetes service traffic requiring SNAT */
+
+Chain KUBE-SERVICES (2 references)
+num  target     prot opt source               destination
+1    KUBE-MARK-MASQ  all  -- !169.169.0.0/16       anywhere             /* Kubernetes service cluster ip + port for masquerade purpose */ match-set KUBE-CLUSTER-IP dst,dst
+2    KUBE-NODE-PORT  all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL
+3    ACCEPT     all  --  anywhere             anywhere             match-set KUBE-CLUSTER-IP dst,dst
