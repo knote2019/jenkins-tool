@@ -17,7 +17,7 @@ pipeline {
                 stage('host1 docker') {
                     agent {
                         docker {
-                            image "node:16.13.1-alpine"
+                            image "10.150.9.98:80/devops_tools/jenkins-agent:master"
                         }
                     }
                     options {
@@ -37,7 +37,11 @@ pipeline {
                         }
                         stage('Test3') {
                             steps {
-                                sh "echo 'Test3';pwd; ls -l"
+                                allure([
+                                  includeProperties: false,
+                                  jdk: '',
+                                  results: [[path: '/']]
+                                ])
                             }
                         }
                     }
@@ -70,7 +74,7 @@ pipeline {
                 stage('host2 docker') {
                     agent {
                         docker {
-                            image "node:16.13.1-alpine"
+                            image "10.150.9.98:80/devops_tools/jenkins-agent:master"
                         }
                     }
                     options {
@@ -90,7 +94,11 @@ pipeline {
                         }
                         stage('Test3') {
                             steps {
-                                sh "echo 'Test3';pwd; ls -l"
+                                allure([
+                                  includeProperties: false,
+                                  jdk: '',
+                                  results: [[path: '/']]
+                                ])
                             }
                         }
                     }

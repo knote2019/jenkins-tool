@@ -22,11 +22,6 @@ pipeline {
         stage('Test3') {
             steps {
                 sh "pwd; ls -l; echo ${env.WORKSPACE}"
-                allure([
-                  includeProperties: false,
-                  jdk: '',
-                  results: [[path: '/']]
-                ])
             }
         }
     }
