@@ -1,0 +1,14 @@
+
+
+docker build --rm --tag jenkins-agent --file jenkins-agent.dockerfile .
+
+docker save -o jenkins-agent.tar jenkins-agent
+
+$ docker images
+REPOSITORY           TAG      IMAGE ID       CREATED         SIZE
+jenkins-agent        latest   2703193e9b16   27 seconds ago  221MB
+
+docker load -i jenkins-agent.tar
+
+docker run -d --name jenkins-agent --hostname jenkins-agent jenkins-agent
+docker run -d --name jenkins-agent --hostname jenkins-agent --network host jenkins-agent
