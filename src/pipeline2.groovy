@@ -38,7 +38,7 @@ pipeline {
                         }
                         stage('Test3') {
                             steps {
-                                scripts{
+                                script{
                                     allure([
                                       includeProperties: false,
                                       jdk: '',
@@ -98,7 +98,7 @@ pipeline {
                         }
                         stage('Test3') {
                             steps {
-                                scripts{
+                                script{
                                     allure([
                                       includeProperties: false,
                                       jdk: '',
