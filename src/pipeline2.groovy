@@ -37,11 +37,13 @@ pipeline {
                         }
                         stage('Test3') {
                             steps {
-                                allure([
-                                  includeProperties: false,
-                                  jdk: '',
-                                  results: [[path: '/']]
-                                ])
+                                scripts{
+                                    allure([
+                                      includeProperties: false,
+                                      jdk: '',
+                                      results: [[path: '/']]
+                                    ])
+                                }
                             }
                         }
                     }
