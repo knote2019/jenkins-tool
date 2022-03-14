@@ -14,16 +14,21 @@ spec:
     command: ['cat']
     tty: true
     volumeMounts:
-  　- name: stores
-      mountPath: /stores
+    - name: nfs-stores
+      mountPath: '/stores'
   volumes:
-  - name: stores
+  - name: nfs-stores
     hostPath:
-      path: /stores
-      type: DirectoryOrCreate
+      path: '/stores'
 """
     }
   }
+
+  options {
+    timestamps()
+    skipDefaultCheckout()
+  }
+
   stages {
     stage('Run maven') {
       steps {

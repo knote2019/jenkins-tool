@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+spec:
+  hostNetwork: true
+  containers:
+  - name: maven
+    image: maven:3.3.9-jdk-8-alpine
+    command: ['cat']
+    tty: true
+    volumeMounts:
+  　- name: stores
+      mountPath: '/stores'
+  volumes:
+  - name: stores
+    hostPath:
+      path: '/stores'
+      type: DirectoryOrCreate
