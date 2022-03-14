@@ -10,7 +10,7 @@ spec:
   hostNetwork: true
   containers:
   - name: maven
-    image: maven:3.3.9-jdk-8-alpine
+    image: 10.150.9.98:80/devops_tools/jenkins-agent:master
     command: ['cat']
     tty: true
     volumeMounts:
@@ -34,7 +34,12 @@ spec:
     stage('Run maven') {
       steps {
         container('maven') {
-          sh 'mvn -version; ls -l /stores'
+          sh 'ls -l /stores'
+          allure([
+            includeProperties: false,
+            jdk: '',
+            results: [[path: '/']]
+          ])
         }
       }
     }

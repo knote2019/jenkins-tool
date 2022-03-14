@@ -1,6 +1,6 @@
 
 
-docker build --rm --tag jenkins-agent --file jenkins-agent.dockerfile .
+docker build --rm --tag 10.150.9.98:80/devops_tools/jenkins-agent:master --file jenkins-agent.dockerfile .
 
 docker save -o jenkins-agent.tar jenkins-agent
 
