@@ -18,6 +18,7 @@ pipeline {
                     agent {
                         docker {
                             image "10.150.9.98:80/devops_tools/jenkins-agent:master"
+                            args "--entrypoint=''"
                         }
                     }
                     options {
@@ -77,6 +78,7 @@ pipeline {
                     agent {
                         docker {
                             image "10.150.9.98:80/devops_tools/jenkins-agent:master"
+                            args "--entrypoint=''"
                         }
                     }
                     options {
@@ -96,11 +98,13 @@ pipeline {
                         }
                         stage('Test3') {
                             steps {
-                                allure([
-                                  includeProperties: false,
-                                  jdk: '',
-                                  results: [[path: '/']]
-                                ])
+                                scripts{
+                                    allure([
+                                      includeProperties: false,
+                                      jdk: '',
+                                      results: [[path: '/']]
+                                    ])
+                                }
                             }
                         }
                     }
