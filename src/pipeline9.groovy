@@ -15,11 +15,12 @@ spec:
     tty: true
     volumeMounts:
     - name: nfs-stores
-      mountPath: '/stores'
+      mountPath: /stores
+      readOnly: true
   volumes:
   - name: nfs-stores
     hostPath:
-      path: '/stores'
+      path: /stores
 """
     }
   }
