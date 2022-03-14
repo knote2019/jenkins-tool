@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image "10.150.9.98:80/devops_tools/jenkins-agent:master"
+            args "--entrypoint=''"
         }
     }
     options {
