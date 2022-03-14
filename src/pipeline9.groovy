@@ -41,7 +41,9 @@ spec:
             includeProperties: false,
             jdk: '',
             results: [[path: '/']]
-          ])
+          ]){
+            commandline('2.17.0')
+          }
         }
       }
     }
