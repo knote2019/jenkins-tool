@@ -1,8 +1,7 @@
 pipeline {
     agent {
         docker {
-            image "node:16.13.1-alpine"
-            args "-v /workspace:/workspace"
+            image "10.150.9.98:80/devops_tools/jenkins-agent:master"
         }
     }
     options {
@@ -22,6 +21,11 @@ pipeline {
         stage('Test3') {
             steps {
                 sh "ls -l /workspace; node --version"
+                allure([
+                  includeProperties: false,
+                  jdk: '',
+                  results: [[path: '/']]
+                ])
             }
         }
     }
