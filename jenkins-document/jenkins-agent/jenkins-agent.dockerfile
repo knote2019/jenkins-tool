@@ -1,7 +1,8 @@
+# https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.17.0/allure-commandline-2.17.0.tgz
 FROM ubuntu:20.04
 
 ADD repo/ubuntu2004.ubuntu.sources.list /etc/apt/sources.list
-ADD https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.17.0/allure-commandline-2.17.0.tgz /
+ADD http://10.150.9.95/corex/kvm/allure-commandline-2.17.0.tgz /
 
 RUN set -x \
 && apt update -y\
@@ -12,6 +13,7 @@ RUN set -x \
 && apt install -y vim \
 && apt install -y openjdk-11-jre-headless \
 && tar -xzvf /allure-commandline-2.17.0.tgz -C / \
+&& ln -sf /allure-2.17.0 /allure \
 && ln -sf /allure-2.17.0/bin/allure /usr/bin/allure \
 && echo "begin" \
 && echo 'root:cloud1234' | chpasswd \
