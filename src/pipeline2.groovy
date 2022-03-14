@@ -20,6 +20,10 @@ pipeline {
                             image "node:16.13.1-alpine"
                         }
                     }
+                    options {
+                        timestamps()
+                        ansiColor('xterm')
+                    }
                     stages {
                         stage('Test1') {
                             steps {
@@ -68,6 +72,10 @@ pipeline {
                         docker {
                             image "node:16.13.1-alpine"
                         }
+                    }
+                    options {
+                        timestamps()
+                        ansiColor('xterm')
                     }
                     stages {
                         stage('Test1') {

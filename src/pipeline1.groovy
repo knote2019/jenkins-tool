@@ -5,6 +5,9 @@ pipeline {
             args "-v /workspace:/workspace"
         }
     }
+    options {
+        timestamps()
+    }
     stages {
         stage('Test1') {
             steps {
