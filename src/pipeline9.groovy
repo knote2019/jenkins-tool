@@ -35,7 +35,7 @@ spec:
       steps {
         container('maven') {
           sh 'ls -l /stores'
-          sh 'mkdir /kenny'
+          sh 'mkdir /kenny; chmod 666 /kenny'
           sh 'ls -l /'
           allure([
             includeProperties: false,
