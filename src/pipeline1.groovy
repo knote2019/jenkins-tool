@@ -1,27 +1,64 @@
 pipeline {
-    agent {
-        docker {
-            image "10.150.9.98:80/devops_tools/jenkins-agent:master"
-            args "--entrypoint=''"
-        }
-    }
-    options {
-        timestamps()
-    }
+    agent none
     stages {
-        stage('Test1') {
-            steps {
-                sh "pwd; ls -l; echo ${env.WORKSPACE}"
+        stage('host1'){
+            agent { node { label "10.115.0.251" } }
+            options {
+                timestamps()
+                ansiColor('xterm')
             }
-        }
-        stage('Test2') {
-            steps {
-                sh "pwd; ls -l; echo ${env.WORKSPACE}"
+            stages {
+                stage('host1 host') {
+                    steps {
+                        sh "echo 'host1 host';pwd; ls -l"
+                    }
+                }
+
+                stage('host1 docker') {
+                    agent {
+                        docker {
+                            image "10.150.9.98:80/devops_tools/jenkins-agent:master"
+                            args "--entrypoint=''"
+                        }
+                    }
+                    options {
+                        timestamps()
+                        ansiColor('xterm')
+                    }
+                    stages {
+                        stage('Test1') {
+                            steps {
+                                sh "echo 'Test1';pwd; ls -l"
+                            }
+                        }
+                        stage('Test2') {
+                            steps {
+                                sh "echo 'Test2';pwd; ls -l"
+                            }
+                        }
+                        stage('Test3') {
+                            steps {
+                                script{
+                                    allure([
+                                      includeProperties: false,
+                                      jdk: '',
+                                      results: [[path: '/']]
+                                    ])
+                                }
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            echo 'host1 docker POST'
+                        }
+                    }
+                }
             }
-        }
-        stage('Test3') {
-            steps {
-                sh "pwd; ls -l; echo ${env.WORKSPACE}"
+            post {
+                always {
+                    echo 'host1 POST'
+                }
             }
         }
     }
