@@ -16,12 +16,12 @@ pipeline {
         }
         stage('Test2') {
             steps {
-                sh "ls -l /workspace; touch /workspace/kenny.txt"
+                sh "pwd; ls -l; echo ${env.WORKSPACE}"
             }
         }
         stage('Test3') {
             steps {
-                sh "ls -l /workspace;"
+                sh "pwd; ls -l; echo ${env.WORKSPACE}"
                 allure([
                   includeProperties: false,
                   jdk: '',
