@@ -13,6 +13,8 @@ spec:
       image: 10.150.9.98:80/devops_tools/jenkins-agent:master
       command: ['cat']
       tty: true
+      securityContext:
+        privileged: true
       volumeMounts:
       - name: nfs-stores
         mountPath: /stores
