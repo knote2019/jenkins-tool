@@ -1,0 +1,7 @@
+通过设置可以运行job在description中添加html:
+
+例如:
+kernel链接地址:
+<br/>
+<a href="https://kernel.ubuntu.com/~kernel-ppa/mainline/">https://kernel.ubuntu.com/~kernel-ppa/mainline/</a>
+<br/>
