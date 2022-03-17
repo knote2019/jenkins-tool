@@ -27,10 +27,13 @@ spec:
 ) {
     node("jenkins-pod-slave-1") {
         container("maven") {
-            stage("Checkout") {
+            stage("install") {
                 sh 'ls -l /stores'
             }
-            stage("Build") {
+            stage("test") {
+                sh 'ls -l /stores'
+            }
+            stage("report") {
                 sh 'ls -l /stores'
             }
         }
