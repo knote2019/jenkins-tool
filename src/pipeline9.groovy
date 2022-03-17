@@ -1,6 +1,8 @@
 podTemplate(
-    name: 'jenkins-slave',
-    label: 'jenkins-slave',
+    cloud: "kubernetes",
+    namespace: "default",
+    name: "jenkins-pod-slave-1",
+    label: "jenkins-pod-slave-1",
     yaml: """
 apiVersion: v1
 kind: Pod
@@ -21,7 +23,7 @@ spec:
       path: /stores
 """,
 ) {
-    node("jenkins-slave") {
+    node("jenkins-pod-slave-1") {
         container("runner") {
             stage("Checkout") {
                 sh 'ls -l /stores'
