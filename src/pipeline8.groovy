@@ -22,7 +22,7 @@ spec:
     volumes:
     - name: nfs-stores
       hostPath:
-      path: /stores
+        path: /stores
 """,
 ) {
     node("jenkins-pod-slave-1") {
