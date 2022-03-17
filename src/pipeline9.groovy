@@ -1,5 +1,6 @@
 podTemplate(
     name: 'jenkins-slave',
+    label: 'jenkins-slave',
     yaml: """
 apiVersion: v1
 kind: Pod
