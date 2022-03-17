@@ -1,11 +1,4 @@
-pipeline {
-
-
 podTemplate(
-    cloud: "kubernetes",
-    namespace: "default",
-    name: POD_NAME,
-    label: POD_NAME,
     yaml: """
 apiVersion: v1
 kind: Pod
@@ -36,6 +29,4 @@ spec:
             }
         }
     }
-}
-
 }
