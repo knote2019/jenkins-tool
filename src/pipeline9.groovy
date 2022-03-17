@@ -1,9 +1,9 @@
-podTemplate(
-    cloud: "kubernetes",
-    namespace: "default",
-    name: "jenkins-pod-slave-1",
-    label: "jenkins-pod-slave-1",
-    yaml: """
+pipeline {
+    agent {
+        kubernetes {
+            cloud 'kubernetes'
+            label 'mypod'
+            yaml """
 apiVersion: v1
 kind: Pod
 spec:
@@ -13,8 +13,6 @@ spec:
       image: 10.150.9.98:80/devops_tools/jenkins-agent:master
       command: ['cat']
       tty: true
-      securityContext:
-        privileged: true
       volumeMounts:
       - name: nfs-stores
         mountPath: /stores
@@ -23,15 +21,21 @@ spec:
     - name: nfs-stores
       hostPath:
       path: /stores
-""",
-) {
-    node("jenkins-pod-slave-1") {
-        container("runner") {
-            stage("Checkout") {
-                sh 'ls -l /stores'
-            }
-            stage("Build") {
-                sh 'ls -l /stores'
+"""
+        }
+    }
+
+    options {
+        timestamps()
+        skipDefaultCheckout()
+    }
+
+    stages {
+        stage('Run maven') {
+            steps {
+                container('maven') {
+                    sh 'ls -l /stores'
+                }
             }
         }
     }
