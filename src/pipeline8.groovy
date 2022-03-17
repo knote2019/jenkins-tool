@@ -34,7 +34,11 @@ spec:
                 sh 'ls -l /stores'
             }
             stage("report") {
-                sh 'ls -l /stores'
+                allure([
+                  includeProperties: false,
+                  jdk: '',
+                  results: [[path: '/']]
+                ])
             }
         }
     }
