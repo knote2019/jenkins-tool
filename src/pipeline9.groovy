@@ -34,11 +34,7 @@ spec:
         stage('Run maven') {
             steps {
                 container('maven') {
-                    stage('host1 host') {
-                        steps {
-                            sh 'ls -l /stores'
-                        }
-                    }
+                    sh 'ls -l /stores'
                 }
             }
         }
