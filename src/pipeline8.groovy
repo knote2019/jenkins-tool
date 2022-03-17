@@ -26,7 +26,7 @@ spec:
 """,
 ) {
     node("jenkins-pod-slave-1") {
-        container("runner") {
+        container("maven") {
             stage("Checkout") {
                 sh 'ls -l /stores'
             }
