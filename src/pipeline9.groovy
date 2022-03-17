@@ -20,7 +20,7 @@ spec:
     volumes:
     - name: nfs-stores
       hostPath:
-      path: /stores
+        path: /stores
 """
         }
     }
