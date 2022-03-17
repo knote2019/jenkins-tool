@@ -1,3 +1,6 @@
+pipeline {
+
+
 podTemplate(
     cloud: "kubernetes",
     namespace: "default",
@@ -33,4 +36,6 @@ spec:
             }
         }
     }
+}
+
 }
