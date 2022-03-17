@@ -1,0 +1,1 @@
+251机器上需要安装allure才能跑通pipeline1/2.
