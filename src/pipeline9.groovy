@@ -1,5 +1,5 @@
 podTemplate(
-    cloud: kubernetes,
+    cloud: "kubernetes",
     namespace: "default",
     name: POD_NAME,
     label: POD_NAME,
