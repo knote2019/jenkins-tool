@@ -1,9 +1,9 @@
-podTemplate(
-    cloud: kubernetes,
-    namespace: "default",
-    name: POD_NAME,
-    label: POD_NAME,
-    yaml: """
+pipeline {
+    agent {
+        kubernetes {
+            cloud 'kubernetes'
+            label 'mypod'
+            yaml """
 apiVersion: v1
 kind: Pod
 spec:
@@ -21,15 +21,21 @@ spec:
     - name: nfs-stores
       hostPath:
       path: /stores
-""",
-) {
-    node(POD_NAME) {
-        container("runner") {
-            stage("Checkout") {
-                sh 'ls -l /stores'
-            }
-            stage("Build") {
-                sh 'ls -l /stores'
+"""
+        }
+    }
+
+    options {
+        timestamps()
+        skipDefaultCheckout()
+    }
+
+    stages {
+        stage('Run maven') {
+            steps {
+                container('maven') {
+                    sh 'ls -l /stores'
+                }
             }
         }
     }
