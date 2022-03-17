@@ -19,7 +19,7 @@ spec:
       path: /stores
 """,
 ) {
-    node(POD_NAME) {
+    node("maven") {
         container("runner") {
             stage("Checkout") {
                 sh 'ls -l /stores'
