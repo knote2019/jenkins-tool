@@ -3,27 +3,7 @@ podTemplate(
     namespace: "default",
     name: "jenkins-pod-slave-1",
     label: "jenkins-pod-slave-1",
-    yaml: """
-apiVersion: v1
-kind: Pod
-spec:
-    hostNetwork: true
-    containers:
-    - name: maven
-      image: 10.150.9.98:80/devops_tools/jenkins-agent:master
-      command: ['cat']
-      tty: true
-      securityContext:
-        privileged: true
-      volumeMounts:
-      - name: nfs-stores
-        mountPath: /stores
-        readOnly: true
-    volumes:
-    - name: nfs-stores
-      hostPath:
-        path: /stores
-""",
+    yaml: readTrusted('pod.yaml'),
 ) {
     node("jenkins-pod-slave-1") {
         container("maven") {
@@ -34,11 +14,7 @@ spec:
                 sh 'ls -l /stores'
             }
             stage("report") {
-                allure([
-                  includeProperties: false,
-                  jdk: '',
-                  results: [[path: '/']]
-                ])
+                sh 'ls -l /stores'
             }
         }
     }
