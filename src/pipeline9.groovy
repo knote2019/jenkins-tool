@@ -1,4 +1,5 @@
 podTemplate(
+    name: 'jenkins-slave'
     yaml: """
 apiVersion: v1
 kind: Pod
@@ -19,7 +20,7 @@ spec:
       path: /stores
 """,
 ) {
-    node("maven") {
+    node("jenkins-slave") {
         container("runner") {
             stage("Checkout") {
                 sh 'ls -l /stores'
