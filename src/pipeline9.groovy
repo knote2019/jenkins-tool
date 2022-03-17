@@ -31,7 +31,21 @@ spec:
     }
 
     stages {
-        stage('Run maven') {
+        stage('install') {
+            steps {
+                container('maven') {
+                    sh 'ls -l /stores'
+                }
+            }
+        }
+        stage('test') {
+            steps {
+                container('maven') {
+                    sh 'ls -l /stores'
+                }
+            }
+        }
+        stage('report') {
             steps {
                 container('maven') {
                     sh 'ls -l /stores'
