@@ -15,3 +15,6 @@ docker run \
 --name jenkins \
 jenkins/jenkins:lts-jdk11
 
+登录:
+http://10.115.0.251:8080/
+admin/admin1234
